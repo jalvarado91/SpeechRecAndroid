@@ -32,6 +32,7 @@ public class MainActivity extends ActionBarActivity {
         spchbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mainTextView.setText("");
                 Intent listenerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
                 startActivityForResult(listenerIntent, 1);
             }
