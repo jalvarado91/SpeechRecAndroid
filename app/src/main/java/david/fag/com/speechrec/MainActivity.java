@@ -1,5 +1,6 @@
 package david.fag.com.speechrec;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
@@ -11,17 +12,22 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+
+import java.util.ArrayList;
 
 
 public class MainActivity extends ActionBarActivity {
+
+    public TextView mainTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SpeechRecognizer sc = SpeechRecognizer.createSpeechRecognizer(getApplicationContext());
         Button spchbtn = (Button) findViewById(R.id.start_recon_button);
+        mainTextView = (TextView) findViewById(R.id.main_text_view);
 
         spchbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -31,57 +37,18 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-        sc.setRecognitionListener(new RecognitionListener() {
-            @Override
-            public void onReadyForSpeech(Bundle params) {
-
-            }
-
-            @Override
-            public void onBeginningOfSpeech() {
-
-            }
-
-            @Override
-            public void onRmsChanged(float rmsdB) {
-
-            }
-
-            @Override
-            public void onBufferReceived(byte[] buffer) {
-
-            }
-
-            @Override
-            public void onEndOfSpeech() {
-
-            }
-
-            @Override
-            public void onError(int error) {
-
-            }
-
-            @Override
-            public void onResults(Bundle results) {
-                Log.v("FAGDADIV", results.toString());
-            }
-
-            @Override
-            public void onPartialResults(Bundle partialResults) {
-
-            }
-
-            @Override
-            public void onEvent(int eventType, Bundle params) {
-
-            }
-        });
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.v("DAVIDISGAY", "YO "+requestCode);
         Log.v("DAVIDISGAY", "YO "+resultCode);
+        if (resultCode == Activity.RESULT_OK && data != null) {
+            ArrayList<String> results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            Log.v("DAVIDISGAY", "DATA "+ results.toString());
+            for(String result : results) {
+                mainTextView.append(result + "\n");
+            }
+        }
     }
 
     @Override
