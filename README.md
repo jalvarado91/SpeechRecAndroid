@@ -1,3 +1,3 @@
 # SpeechRecAndroid
 
-Speech Rec Example because david is gay
+Speech Rec Example because david can't code
